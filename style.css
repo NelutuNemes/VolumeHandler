@@ -4,7 +4,7 @@ body{
 }
 .container{
     background-color: rgb(90, 89, 89);
-    width: 35rem;
+    width: fit-content;
     height: 65vh;
     display: flex;
     flex-direction: column;
@@ -45,43 +45,76 @@ body{
     border: 1px solid white;
 }
 
-#display{
+.display{
+    display: none;
     width: fit-content;
     height: fit-content;
-    background: white;
+    color: white;
     border: 1px solid lightgray;
     margin-left: 1rem;
     padding: 0.5rem;
     border-radius: 6px;
+    margin-top: 2rem;
+}
+.display-visible{
+    display: flex;
 }
 .records-block{
+    width: fit-content;
     display: flex;
     flex-direction: column;
-    align-items: end;  
+    justify-content: center;
+    margin-right: 2rem;
+    padding: 0;
 }
 
 ul{
 width: fit-content;
-/* background-color: white; */
+/* background-color: rgb(180, 169, 169); */
 color: white;
 min-height: 2rem;
 min-width: 30rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+gap: 0.2rem;
 }
 
 li{
-    width: 30rem;
+    min-width: 32rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     gap: 0.5rem;   
-    font: size 1rem;
+    font-size:1rem;
     margin-bottom: 0.5rem;
-    border-bottom: 1px solid white;
+    border: 1px solid white;
+    border-radius: 3px;
+    margin: auto;
+    padding: 2px;
+}
+.text-highlight {
+    color: greenyellow;
+    font-weight: bold;
+    margin-right: 0.2rem;
 }
 p{
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-align: center;
+}
+#delete-record-btn{
+    background: lightgrey;
+    border-radius: 3px;
+    border: 1px solid transparent;
+}
+#delete-record-btn:hover{
+    background: rgb(242, 235, 235);
+    color: red;
+    border-radius: 3px;
+    border: 1px solid red;
 }
 
 
