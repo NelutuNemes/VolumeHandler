@@ -29,57 +29,43 @@ log(`Start records list: ${JSON.stringify(records)}`);
 //main function for add records
 
 function addRecord() {
-    const recordWidth = widthInput.value.trim();
-    const recordHeight = heightInput.value.trim();
-    const recordLength = lengthInput.value.trim();
-    const recordQuantity = quantityInput.value.trim();
-    const itemVolume = null;
+    const recordWidth = Number(widthInput.value.trim());
+    const recordHeight = Number(heightInput.value.trim());
+    const recordLength = Number(lengthInput.value.trim());
+    const recordQuantity = Number(quantityInput.value.trim());
     
-
-    log(`Width :${recordWidth}`);
-    log(`Height :${recordHeight}`);
-    log(`Length :${recordLength}`);
-    log(`Quantity :${recordQuantity}`);
-
-    if (recordWidth !== ""
-        && recordHeight !== ""
-        && recordLength !== ""
-        && recordQuantity !== "") {
+    if (isNaN(recordWidth) || isNaN(recordHeight) || isNaN(recordLength) || isNaN(recordQuantity) ||
+    recordWidth <= 0 || recordHeight <= 0 || recordLength <= 0 || recordQuantity <= 0) {
+        log("Invalid input. Please enter positive numbers.");
+        alert("Invalid input. Please enter positive numbers in all fields!");
+    return;
+    }
+    else {
         
         const record = {
             id: Date.now(),
             widthItem: recordWidth,
             heightItem: recordHeight,
             lengthItem: recordLength,
-            quantityItem: recordQuantity
+            quantityItem: recordQuantity,
+            itemVolume:recordWidth * recordHeight * recordLength * recordQuantity
         }
         records.push(record);
 
-        calculateVolume();
         totalVolume();
         updateUI();
 
-    } else return;
+    };
 
     widthInput.value = "";
     heightInput.value = "";
     lengthInput.value = "";
     quantityInput.value = "";
 
-    log(`Current records list is : ${JSON.stringify(records)}`)
+    log(`Current records list is : ${JSON.stringify(records)}`);
+    // alert("Record added successfully!");
 }
 
-function calculateVolume() {
-    records.forEach((record) => {
-        record.itemVolume =
-            parseFloat(record.widthItem)
-            * parseFloat(record.heightItem)
-            * parseFloat(record.lengthItem)
-            * parseFloat(record.quantityItem)
-    });
-
-    log(`Records list after volum calculation is : ${JSON.stringify(records)}`)
-}
 function totalVolume() {
     display.classList.add("display-visible");
     let grandTotalVolume = 0;
@@ -114,41 +100,82 @@ function updateUI() {
 
     records.forEach((record) => {
         counter++;
+
         let recordLiElement = document.createElement("li");
 
-let idCell = document.createElement("p");
-idCell.innerHTML = `<span class="text-highlight">ID:</span>${counter}`;
+        let orderNumberLabel = document.createElement("div");
+        orderNumberLabel.setAttribute("class", "itemLabel");
+        orderNumberLabel.innerHTML = "No.";
+        recordLiElement.appendChild(orderNumberLabel);
 
-let widthCell = document.createElement("p");
-widthCell.innerHTML = `<span class="text-highlight">Width:</span>${record.widthItem}`;
+        let orderNumberValue = document.createElement("p");
+        orderNumberValue.setAttribute("Id", "orderNumValue");
+        orderNumberValue.innerHTML = counter;
+        recordLiElement.appendChild(orderNumberValue);
 
-let heightCell = document.createElement("p");
-heightCell.innerHTML = `<span class="text-highlight">Height:</span>${record.heightItem}`;
+        let widthCellLabel = document.createElement("div");
+        widthCellLabel.setAttribute("class", "itemLabel");
+        widthCellLabel.innerHTML = "Width: ";
+        recordLiElement.appendChild(widthCellLabel);
 
-let lengthCell = document.createElement("p");
-lengthCell.innerHTML = `<span class="text-highlight">Length: </span>${record.lengthItem}`;
+        let widthCell = document.createElement("p");
+        widthCell.setAttribute("Id", "widthCell");
+        widthCell.innerHTML = record.widthItem;
+        recordLiElement.appendChild(widthCell);
 
-let quantityCell = document.createElement("p");
-quantityCell.innerHTML = `<span class="text-highlight">Quantity:</span>${record.quantityItem}`;
+        let heightCellLabel = document.createElement("div");
+        heightCellLabel.setAttribute("class", "itemLabel");
+        heightCellLabel.innerHTML = "Height: ";
+        recordLiElement.appendChild(heightCellLabel);
 
-let volumeCell = document.createElement("p");
-volumeCell.innerHTML = `<span class="text-highlight">Volume:</span>${record.itemVolume.toFixed(2)}`;
+        let heightCell = document.createElement("p");
+        heightCell.setAttribute("Id", "heightCell");
+        heightCell.innerHTML = record.heightItem;
+        recordLiElement.appendChild(heightCell);
+
+
+        let lengthCellLabel = document.createElement("div");
+        lengthCellLabel.setAttribute("class", "itemLabel");
+        lengthCellLabel.innerHTML = "Length: ";
+        recordLiElement.appendChild(lengthCellLabel);
+
+        let lengthCell = document.createElement("p");
+        lengthCell.setAttribute("Id", "lengthCell");
+        lengthCell.innerHTML = record.lengthItem;
+        recordLiElement.appendChild(lengthCell);
+
+
+        let quantityCellLabel = document.createElement("div");
+        quantityCellLabel.setAttribute("class", "itemLabel");
+        quantityCellLabel.innerHTML = "Quantity: ";
+        recordLiElement.appendChild(quantityCellLabel);
+
+        let quantityCell = document.createElement("p");
+        quantityCell.setAttribute("Id", "quantityCell");
+        quantityCell.innerHTML = record.quantityItem;
+        recordLiElement.appendChild(quantityCell);
+
+
+        let volumeCellLabel = document.createElement("div");
+        volumeCellLabel.setAttribute("class", "itemLabel");
+        volumeCellLabel.innerHTML = "Volume: ";
+        recordLiElement.appendChild(volumeCellLabel);
+
+        let volumeCell = document.createElement("p");
+        volumeCell.setAttribute("Id", "volumeCell");
+        volumeCell.innerHTML =`${record.itemVolume.toFixed(2)} mc ` ;
+        recordLiElement.appendChild(volumeCell);
+
         
-let deleteRecordBtn = document.createElement("button");
+        let deleteRecordBtn = document.createElement("button");
         deleteRecordBtn.textContent = "Delete";
         deleteRecordBtn.setAttribute("id","delete-record-btn");
-deleteRecordBtn.addEventListener("click",()=>deleteRecord(record.id))
-        
-        recordLiElement.appendChild(idCell);
-        recordLiElement.appendChild(widthCell);
-        recordLiElement.appendChild(heightCell);
-        recordLiElement.appendChild(lengthCell);
-        recordLiElement.appendChild(quantityCell);
-        recordLiElement.appendChild(volumeCell);
         recordLiElement.appendChild(deleteRecordBtn);
 
+        deleteRecordBtn.addEventListener("click", () => deleteRecord(record.id))
+        
         recordsList.appendChild(recordLiElement)
 
     });
-    log(`Update Display !`);
+    log(`Display updated !`);
 }
