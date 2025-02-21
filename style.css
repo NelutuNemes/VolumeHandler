@@ -1,17 +1,26 @@
 body{
-    background-color: lightsteelblue;
+    background-color: rgb(1, 80, 1);
     flex: 1;
+}
+header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 2rem;
+    color: greenyellow;
 }
 .container{
     background-color: rgb(90, 89, 89);
-    width: fit-content;
-    height: 65vh;
+    /* width: max-content; */
+    height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: auto;
     margin-bottom: 5rem;
     padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 12px;
 }
 .operands{
     border: 1px solid white;
@@ -68,44 +77,42 @@ body{
     padding: 0;
 }
 
-ul{
-width: fit-content;
-/* background-color: rgb(180, 169, 169); */
-color: white;
-min-height: 2rem;
-min-width: 30rem;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-gap: 0.2rem;
+ul {
+    width: fit-content;
+    background-color: rgb(180, 169, 169);
+    color: white;
+    min-height: 2rem;
+    min-width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns list items to the left */
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0; /* Removes padding to prevent unintended spacing */
 }
 
-li{
-    min-width: 32rem;
+li {
+    background: black;
+    width: 37rem;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;   
-    font-size:0.8rem;
+    gap: 0.3rem;   
+    font-size: 0.8rem;
     margin-bottom: 0.5rem;
-    border: 1px solid white;
+    border: 1px solid transparent;
     border-radius: 3px;
-    margin: auto;
-    padding: 2px;
-}
-.text-highlight {
-    color: greenyellow;
-    font-weight: bold;
-    margin-right: 0.2rem;
+    margin:auto;
+    padding: 0.1rem;
+    box-sizing: border-box;
 }
 p{
     margin: 0;
     font-size: 0.8rem;
     text-align: center;
 }
-.itemLabel{
+#itemLabel{
     color: greenyellow;
 }
 
@@ -115,7 +122,6 @@ p{
     border: 1px solid transparent;
     font-size: 0.7rem;
     font-weight: bold;
-    margin-left: 1.4rem;
 }
 #delete-record-btn:hover{
     background: rgb(242, 235, 235);
@@ -123,8 +129,6 @@ p{
     border-radius: 3px;
     border: 1px solid red;
 }
-
-
 
 footer{
     /* background-color: antiquewhite; */
@@ -137,3 +141,54 @@ footer{
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
+.btn-container{
+    /* display: none; */
+    background-color: lightgray;
+    padding: 0.2rem;
+    border-radius: 6px;
+}
+.buttons{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 0.1rem;
+}
+.btn{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 2px;
+}
+.clear, .delete {
+    grid-column: span 2;
+    width: 6.1rem;
+}
+.enter {
+    grid-column: span 4;
+    width: 12.3rem;
+}
+.decimals{
+    grid-column: span 2;
+    width: 6.1rem;
+}
+.keyboard-btn-block{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+#keyboard-btn{
+    border-radius: 3px;
+}
+.isVisible{
+    display: flex;
+}
+.isHide{
+    display: none;
+}
+
+

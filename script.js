@@ -25,6 +25,8 @@ calculateBtn.addEventListener("click", addRecord);
 let records = [];
 log(`Start records list: ${JSON.stringify(records)}`);
 
+//variable to control keyboard visibility
+keyboardIsEnable = false;
 
 //main function for add records
 
@@ -93,6 +95,22 @@ function deleteRecord(recordID) {
     }
 }
 
+function createRecordTemplate(label,value, units) {
+    let labelDiv = document.createElement("div");
+    labelDiv.setAttribute("id", "itemLabel");
+    labelDiv.textContent = label;
+
+    let valueP = document.createElement("p");
+    valueP.setAttribute("id", "itemValue");
+    valueP.textContent = value;
+
+    let unitsP = document.createElement("p");
+    unitsP.setAttribute("id", "itemUnits");
+    unitsP.textContent = units;
+
+
+    return [labelDiv, valueP,unitsP];
+}
 
 function updateUI() {
     recordsList.textContent = "";
@@ -103,68 +121,21 @@ function updateUI() {
 
         let recordLiElement = document.createElement("li");
 
-        let orderNumberLabel = document.createElement("div");
-        orderNumberLabel.setAttribute("class", "itemLabel");
-        orderNumberLabel.innerHTML = "No.";
-        recordLiElement.appendChild(orderNumberLabel);
+        let recordElements = [
+            createRecordTemplate("No. ", counter,"-"),
+            createRecordTemplate("Width: ", record.widthItem.toFixed(2), "m"),
+            createRecordTemplate("Height: ", record.heightItem.toFixed(2), "m"),
+            createRecordTemplate("Length: ", record.lengthItem.toFixed(2), "m"),
+            createRecordTemplate("Quantity: ", record.quantityItem.toFixed(2), "m"),
+            createRecordTemplate("Volume: ", record.itemVolume.toFixed(2), "m\u00B3"),
+        ];
 
-        let orderNumberValue = document.createElement("p");
-        orderNumberValue.setAttribute("Id", "orderNumValue");
-        orderNumberValue.innerHTML = counter;
-        recordLiElement.appendChild(orderNumberValue);
+        recordElements.forEach(([label, value, units]) => {
+            recordLiElement.appendChild(label);
+            recordLiElement.appendChild(value);
+            recordLiElement.appendChild(units);
+        });
 
-        let widthCellLabel = document.createElement("div");
-        widthCellLabel.setAttribute("class", "itemLabel");
-        widthCellLabel.innerHTML = "Width: ";
-        recordLiElement.appendChild(widthCellLabel);
-
-        let widthCell = document.createElement("p");
-        widthCell.setAttribute("Id", "widthCell");
-        widthCell.innerHTML = record.widthItem;
-        recordLiElement.appendChild(widthCell);
-
-        let heightCellLabel = document.createElement("div");
-        heightCellLabel.setAttribute("class", "itemLabel");
-        heightCellLabel.innerHTML = "Height: ";
-        recordLiElement.appendChild(heightCellLabel);
-
-        let heightCell = document.createElement("p");
-        heightCell.setAttribute("Id", "heightCell");
-        heightCell.innerHTML = record.heightItem;
-        recordLiElement.appendChild(heightCell);
-
-
-        let lengthCellLabel = document.createElement("div");
-        lengthCellLabel.setAttribute("class", "itemLabel");
-        lengthCellLabel.innerHTML = "Length: ";
-        recordLiElement.appendChild(lengthCellLabel);
-
-        let lengthCell = document.createElement("p");
-        lengthCell.setAttribute("Id", "lengthCell");
-        lengthCell.innerHTML = record.lengthItem;
-        recordLiElement.appendChild(lengthCell);
-
-
-        let quantityCellLabel = document.createElement("div");
-        quantityCellLabel.setAttribute("class", "itemLabel");
-        quantityCellLabel.innerHTML = "Quantity: ";
-        recordLiElement.appendChild(quantityCellLabel);
-
-        let quantityCell = document.createElement("p");
-        quantityCell.setAttribute("Id", "quantityCell");
-        quantityCell.innerHTML = record.quantityItem;
-        recordLiElement.appendChild(quantityCell);
-
-
-        let volumeCellLabel = document.createElement("div");
-        volumeCellLabel.setAttribute("class", "itemLabel");
-        volumeCellLabel.innerHTML = "Volume: ";
-        recordLiElement.appendChild(volumeCellLabel);
-
-        let volumeCell = document.createElement("p");
-        volumeCell.setAttribute("Id", "volumeCell");
-        volumeCell.innerHTML =`${record.itemVolume.toFixed(2)} mc ` ;
-        recordLiElement.appendChild(volumeCell);
 
         
         let deleteRecordBtn = document.createElement("button");
@@ -179,3 +150,15 @@ function updateUI() {
     });
     log(`Display updated !`);
 }
+
+let displayBtnContainer = document.getElementsByClassName("btn-container")[0];
+let keyboardBtnBlock = document.getElementById("keyboard-btn-block");
+
+displayBtnContainer.classList.add("isHide");
+
+let keyboardBtn = document.getElementById("keyboard-btn");
+
+keyboardBtn.addEventListener("click", () => {
+    keyboardIsEnable = !keyboardIsEnable; // Toggle the state variable
+    displayBtnContainer.style.display = keyboardIsEnable ? "flex" : "none";
+});
