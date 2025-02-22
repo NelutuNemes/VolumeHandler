@@ -30,10 +30,10 @@ log(`Start records list: ${JSON.stringify(records)}`);
 //main function for add records
 
 function addRecord() {
-    const recordWidth = Number(widthInput.value.trim());
-    const recordHeight = Number(heightInput.value.trim());
-    const recordLength = Number(lengthInput.value.trim());
-    const recordQuantity = Number(quantityInput.value.trim());
+    const recordWidth = Number(widthInput.value.trim().replace(",", "."));
+    const recordHeight = Number(heightInput.value.trim().replace(",", "."));
+    const recordLength = Number(lengthInput.value.trim().replace(",", "."));
+    const recordQuantity = Number(quantityInput.value.trim().replace(",", "."));
     
     if (isNaN(recordWidth) || isNaN(recordHeight) || isNaN(recordLength) || isNaN(recordQuantity) ||
     recordWidth <= 0 || recordHeight <= 0 || recordLength <= 0 || recordQuantity <= 0) {
