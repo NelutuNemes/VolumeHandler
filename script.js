@@ -150,8 +150,8 @@ function updateUI() {
     log(`Display updated !`);
 }
 
-//variable to
-    let activeInput = null;
+// // Variable to store the currently active input field for the virtual keyboard
+let activeInput = null;
 
 
 document.addEventListener("DOMContentLoaded", () => {
