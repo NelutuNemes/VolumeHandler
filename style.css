@@ -323,13 +323,14 @@ footer{
 }
 #calculate-btn{
     width: fit-content;
-    height: 1.1rem;
+    height: 1.3rem;
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     border-radius: 5px;
     border: 1px solid transparent;
     font-weight: bold;
     margin-top: 3px;
+    margin-left: 3rem;
 }
 
 
