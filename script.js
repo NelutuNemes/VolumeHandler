@@ -16,6 +16,7 @@ let quantityInput = document.getElementById("quantity");
 let display = document.getElementById("display");
 let calculateBtn = document.getElementById("calculate-btn");
 let recordsList = document.getElementById("records-list");
+let buttons = document.querySelectorAll(".btn");
 
 
 
@@ -25,8 +26,6 @@ calculateBtn.addEventListener("click", addRecord);
 let records = [];
 log(`Start records list: ${JSON.stringify(records)}`);
 
-//variable to control keyboard visibility
-keyboardIsEnable = false;
 
 //main function for add records
 
@@ -114,7 +113,7 @@ function createRecordTemplate(label,value, units) {
 
 function updateUI() {
     recordsList.textContent = "";
-        let counter = 0;
+    let counter = 0;
 
     records.forEach((record) => {
         counter++;
@@ -122,7 +121,7 @@ function updateUI() {
         let recordLiElement = document.createElement("li");
 
         let recordElements = [
-            createRecordTemplate("No. ", counter,"-"),
+            createRecordTemplate("No.", counter),
             createRecordTemplate("Width: ", record.widthItem.toFixed(2), "m"),
             createRecordTemplate("Height: ", record.heightItem.toFixed(2), "m"),
             createRecordTemplate("Length: ", record.lengthItem.toFixed(2), "m"),
@@ -151,14 +150,77 @@ function updateUI() {
     log(`Display updated !`);
 }
 
-let displayBtnContainer = document.getElementsByClassName("btn-container")[0];
-let keyboardBtnBlock = document.getElementById("keyboard-btn-block");
+//variable to
+    let activeInput = null;
 
-displayBtnContainer.classList.add("isHide");
 
-let keyboardBtn = document.getElementById("keyboard-btn");
+document.addEventListener("DOMContentLoaded", () => {
+    const keyboard = document.getElementById("virtual-keyboard");
+    const inputs = document.querySelectorAll(".operand");
+    const toggleKeyboardBtn = document.getElementById("toggle-keyboard");
+    const keyboardIcon = document.getElementById("keyboard-icon");
+    
+    //function show keyboard on focus input
+    inputs.forEach(input => {
+        input.addEventListener("focus", () => {
+            activeInput = input;
+            keyboard.classList.remove("isHidden");
+            keyboard.classList.add("isVisible");
+            keyboardIcon.textContent = "🚫⌨️";
+        });
+    });
 
-keyboardBtn.addEventListener("click", () => {
-    keyboardIsEnable = !keyboardIsEnable; // Toggle the state variable
-    displayBtnContainer.style.display = keyboardIsEnable ? "flex" : "none";
+    //function for hide keyboard on click out of area
+
+    document.addEventListener("click", (event) => {
+        if (!event.target.closest(".operand")
+            && !event.target.closest("#virtual-keyboard")
+            && !event.target.closest("#toggle-keyboard")) {
+         
+            keyboard.classList.remove("isVisible");
+            keyboard.classList.add("isHidden");
+            keyboardIcon.textContent = "⌨️";
+
+        }
+    })
+
+    //toggle button  for keypad state
+    toggleKeyboardBtn.addEventListener("click", () => {
+        if (keyboard.classList.contains("isHidden")) {
+            keyboard.classList.remove("isHidden");
+            keyboard.classList.add("isVisible");
+            keyboardIcon.textContent = "🚫⌨️";
+        } else {
+            keyboard.classList.remove("isVisible");
+            keyboard.classList.add("isHidden");
+            keyboardIcon.textContent = "⌨️";
+  
+        }
+    })
+
+
 });
+
+log(`Find: ${buttons.length} buttons.`);
+log(`All buttons: ${Array.from(buttons).map((button) => button.getAttribute("data-value"))}`);
+
+buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+            if (!activeInput) return;
+
+            let value = button.getAttribute("data-value") || "";
+
+            if (value === "C") {
+                activeInput.value = "";
+            } else if (value === "DEL") {
+                activeInput.value = activeInput.value.slice(0, -1);
+            } else if (value === "ENTER") {
+                activeInput.blur();
+                addRecord();
+            } else {
+                activeInput.value += value;
+            }
+
+            log(`Button pressed is: ${value}`);
+        });
+    });
