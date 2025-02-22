@@ -325,13 +325,13 @@ footer{
     width: fit-content;
     height: 1.3rem;
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.6rem;
     border-radius: 5px;
     border: 1px solid transparent;
     font-weight: bold;
     margin-top: 3px;
     margin-left: 3rem;
-    padding: 0.2rem;
+    padding: 3px;
 }
 
 
