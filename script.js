@@ -160,29 +160,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleKeyboardBtn = document.getElementById("toggle-keyboard");
     const keyboardIcon = document.getElementById("keyboard-icon");
     
-    //function show keyboard on focus input
-    inputs.forEach(input => {
-        input.addEventListener("focus", () => {
-            activeInput = input;
-            keyboard.classList.remove("isHidden");
-            keyboard.classList.add("isVisible");
-            keyboardIcon.textContent = "🚫⌨️";
-        });
-    });
+    // //function show keyboard on focus input
+    // inputs.forEach(input => {
+    //     input.addEventListener("focus", () => {
+    //         activeInput = input;
+    //         keyboard.classList.remove("isHidden");
+    //         keyboard.classList.add("isVisible");
+    //         keyboardIcon.textContent = "🚫⌨️";
+    //     });
+    // });
 
     //function for hide keyboard on click out of area
 
-    document.addEventListener("click", (event) => {
-        if (!event.target.closest(".operand")
-            && !event.target.closest("#virtual-keyboard")
-            && !event.target.closest("#toggle-keyboard")) {
+    // document.addEventListener("click", (event) => {
+    //     if (!event.target.closest(".operand")
+    //         && !event.target.closest("#virtual-keyboard")
+    //         && !event.target.closest("#toggle-keyboard")) {
          
-            keyboard.classList.remove("isVisible");
-            keyboard.classList.add("isHidden");
-            keyboardIcon.textContent = "⌨️";
+    //         keyboard.classList.remove("isVisible");
+    //         keyboard.classList.add("isHidden");
+    //         keyboardIcon.textContent = "⌨️";
 
-        }
-    })
+    //     }
+    // })
 
     //toggle button  for keypad state
     toggleKeyboardBtn.addEventListener("click", () => {
