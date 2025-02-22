@@ -150,41 +150,17 @@ function updateUI() {
     log(`Display updated !`);
 }
 
-// // Variable to store the currently active input field for the virtual keyboard
+// Variabilă globală pentru inputul activ
 let activeInput = null;
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const keyboard = document.getElementById("virtual-keyboard");
     const inputs = document.querySelectorAll(".operand");
     const toggleKeyboardBtn = document.getElementById("toggle-keyboard");
     const keyboardIcon = document.getElementById("keyboard-icon");
-    
-    // //function show keyboard on focus input
-    // inputs.forEach(input => {
-    //     input.addEventListener("focus", () => {
-    //         activeInput = input;
-    //         keyboard.classList.remove("isHidden");
-    //         keyboard.classList.add("isVisible");
-    //         keyboardIcon.textContent = "🚫⌨️";
-    //     });
-    // });
+    const buttons = document.querySelectorAll("#virtual-keyboard .btn");
 
-    //function for hide keyboard on click out of area
-
-    // document.addEventListener("click", (event) => {
-    //     if (!event.target.closest(".operand")
-    //         && !event.target.closest("#virtual-keyboard")
-    //         && !event.target.closest("#toggle-keyboard")) {
-         
-    //         keyboard.classList.remove("isVisible");
-    //         keyboard.classList.add("isHidden");
-    //         keyboardIcon.textContent = "⌨️";
-
-    //     }
-    // })
-
-    //toggle button  for keypad state
+    // Afișează tastatura doar la click pe butonul "Keyboard"
     toggleKeyboardBtn.addEventListener("click", () => {
         if (keyboard.classList.contains("isHidden")) {
             keyboard.classList.remove("isHidden");
@@ -194,17 +170,19 @@ document.addEventListener("DOMContentLoaded", () => {
             keyboard.classList.remove("isVisible");
             keyboard.classList.add("isHidden");
             keyboardIcon.textContent = "⌨️";
-  
+            activeInput = null; // Resetare input activ când închizi tastatura
         }
-    })
+    });
 
+    // Setează inputul activ doar când utilizatorul dă click pe un input
+    inputs.forEach(input => {
+        input.addEventListener("click", () => {
+            activeInput = input;
+        });
+    });
 
-});
-
-log(`Find: ${buttons.length} buttons.`);
-log(`All buttons: ${Array.from(buttons).map((button) => button.getAttribute("data-value"))}`);
-
-buttons.forEach((button) => {
+    // Funcționalitatea tastaturii virtuale
+    buttons.forEach((button) => {
         button.addEventListener("click", () => {
             if (!activeInput) return;
 
@@ -221,6 +199,10 @@ buttons.forEach((button) => {
                 activeInput.value += value;
             }
 
-            log(`Button pressed is: ${value}`);
+            console.log(`Button pressed is: ${value}`);
         });
     });
+
+    console.log(`Find: ${buttons.length} buttons.`);
+    console.log(`All buttons: ${Array.from(buttons).map((button) => button.getAttribute("data-value"))}`);
+});
