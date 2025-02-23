@@ -165,15 +165,17 @@ generateSummaryBtn.addEventListener("click", function () {
 
     // Build the summary content with all records
     let summaryContent = "<h3>All Records of session</h3>";
-    summaryContent += "<table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>";
+    summaryContent += "<table border='1' style='width: fit-content; border-collapse: collapse; text-align: center;'>";
     summaryContent += `
         <tr>
-            <th>No.</th>
-            <th>Width (m)</th>
-            <th>Height (m)</th>
-            <th>Length (m)</th>
-            <th>Quantity(pcs)</th>
-            <th>Volume (m³)</th>
+            <th class="custom-width-small">No.</th>
+            <th class="custom-width">Width (m)</th>
+            <th class="custom-width">Height (m)</th>
+            <th class="custom-width">Length (m)</th>
+            <th class="custom-width">Quantity(pcs)</th>
+            <th class="custom-width">Volume (m³)</th>
+            <th class="custom-width">Observations</th>
+
         </tr>
     `;
 
@@ -188,6 +190,7 @@ generateSummaryBtn.addEventListener("click", function () {
                 <td>${record.lengthItem.toFixed(2)}</td>
                 <td>${record.quantityItem}</td>
                 <td>${record.itemVolume.toFixed(2)}</td>
+                <td></td>
             </tr>
         `;
     });

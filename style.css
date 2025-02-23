@@ -235,6 +235,7 @@ footer{
 }
 
 /* Modal styling */
+
 #generate-summary-btn{
     margin-top: 3rem;
 }
@@ -261,6 +262,14 @@ footer{
         font-size: 24px;
         cursor: pointer;
     }
+
+    /* th.custom-width{
+        width: 5.3rem;
+        /* word-wrap: break-word; */
+        /* overflow-wrap: break-word; */
+        /* word-break: break-word; */
+        /* white-space: normal; */
+    } */
 
 @media print {
     body * {
