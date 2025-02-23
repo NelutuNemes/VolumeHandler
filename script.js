@@ -17,6 +17,7 @@ let display = document.getElementById("display");
 let calculateBtn = document.getElementById("calculate-btn");
 let recordsList = document.getElementById("records-list");
 let buttons = document.querySelectorAll(".btn");
+let generateSummaryBtn = document.getElementById("generate-summary-btn");
 
 
 
@@ -150,6 +151,64 @@ function updateUI() {
     log(`Display updated !`);
 }
 
-    document.getElementById("save-pdf-btn").addEventListener("click", () => {
-          window.print();
+//Sumarry modal
+
+generateSummaryBtn.addEventListener("click", function () {
+    // Check if there are records available
+    if (records.length === 0) {
+        alert("No records available to generate summary!");
+        return;
+    }
+
+    // Initialize total volume
+    let totalVolume = 0;
+
+    // Build the summary content with all records
+    let summaryContent = "<h3>All Records of session</h3>";
+    summaryContent += "<table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>";
+    summaryContent += `
+        <tr>
+            <th>No.</th>
+            <th>Width (m)</th>
+            <th>Height (m)</th>
+            <th>Length (m)</th>
+            <th>Quantity(pcs)</th>
+            <th>Volume (m³)</th>
+        </tr>
+    `;
+
+    records.forEach((record, index) => {
+        totalVolume += record.itemVolume; // Add to the total volume
+
+        summaryContent += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${record.widthItem.toFixed(2)}</td>
+                <td>${record.heightItem.toFixed(2)}</td>
+                <td>${record.lengthItem.toFixed(2)}</td>
+                <td>${record.quantityItem}</td>
+                <td>${record.itemVolume.toFixed(2)}</td>
+            </tr>
+        `;
     });
+
+    summaryContent += "</table>";
+
+    // Add total volume below the table
+    summaryContent += `<h3 style="text-align: right; margin-top: 10px;">Total Volume: ${totalVolume.toFixed(2)} m³</h3>`;
+
+    document.getElementById("summary-content").innerHTML = summaryContent;
+    
+    // Show the modal
+    document.getElementById("summary-modal").style.display = "block";
+});
+
+// Event listener for closing the modal
+document.querySelector(".close-btn").addEventListener("click", function() {
+    document.getElementById("summary-modal").style.display = "none";
+});
+
+// Event listener for printing the summary
+document.getElementById("print-summary-btn").addEventListener("click", function() {
+    window.print();
+});
