@@ -150,3 +150,6 @@ function updateUI() {
     log(`Display updated !`);
 }
 
+    document.getElementById("save-pdf-btn").addEventListener("click", () => {
+          window.print();
+    });
