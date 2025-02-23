@@ -269,6 +269,9 @@ footer{
     #summary-modal, #summary-modal * {
         visibility: visible; /* Show only the modal */
     }
+    #print-summary-btn{
+        visibility: hidden;
+    }
     #summary-modal {
         position: absolute;
         top: 0;
