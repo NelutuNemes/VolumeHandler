@@ -317,8 +317,9 @@ footer{
 }
 
 .operand, #calculate-btn {
-    width: 4rem;
-    height: 2rem;
+    min-width: 4rem;
+    min-height: 2rem;
+    padding: 0.5rem 1rem;
     text-align: center;
     font-size: 0.9rem;
     border-radius: 5px;
