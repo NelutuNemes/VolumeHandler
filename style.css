@@ -325,6 +325,10 @@ footer{
     width: fit-content;
     height: 1.3rem;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 0.6rem;
     border-radius: 5px;
     border: 1px solid transparent;
