@@ -260,12 +260,13 @@ footer{
         font-size: 24px;
         cursor: pointer;
     }
-    @media print {
+
+@media print {
     body * {
-        display: none; /* Hide everything */
+        visibility: hidden; /* Hide everything */
     }
     #summary-modal, #summary-modal * {
-        display: block; /* Show only the modal */
+        visibility: visible; /* Show only the modal */
     }
     #summary-modal {
         position: absolute;
@@ -273,11 +274,12 @@ footer{
         left: 0;
         width: 100%;
         height: 100%;
-        background: white; /* Ensure it has a white background */
+        background: white; /* Ensure modal has a background */
         padding: 20px;
         box-sizing: border-box;
     }
 }
+
 
 
 
@@ -290,6 +292,8 @@ footer{
 
     .display {
         font-size: 0.8rem;
+        margin-bottom: 2rem;
+
     }
 
     ul {
@@ -396,6 +400,7 @@ footer{
 
     .display {
         font-size: 0.8rem;
+        margin-bottom: 2rem;
     }
 
     ul {
