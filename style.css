@@ -273,13 +273,14 @@ footer{
 
 @media print {
     body * {
-        visibility: none !important; /* Hide everything */
+        display: none !important; /* Hide everything */
     }
     #summary-modal, #summary-modal * {
-        visibility: block !important; /* Show only the modal */
+        display: block !important;
+        visibility: visible !important; /* Show only the modal */
     }
     #print-summary-btn,.close-btn{
-        visibility: none !important;
+        display: none !important;
     }
     #summary-modal {
         position: absolute;
@@ -287,14 +288,19 @@ footer{
         left: 0;
         width: 100%;
         min-height: 100vh;
-        background: white; /* Ensure modal has a background */
-        color: black;
+        background: white !important; /* Ensure modal has a background */
+        color: black !important;
         padding: 20px;
         box-sizing: border-box;
     }
         table {
         width: 100% !important; /* Ocupă toată lățimea */
         border-collapse: collapse;
+    }
+        th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
     }
 }
 
