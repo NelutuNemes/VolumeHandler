@@ -198,7 +198,7 @@ generateSummaryBtn.addEventListener("click", function () {
     summaryContent += "</table>";
 
     // Add total volume below the table
-    summaryContent += `<h3 style="text-align: right; margin-top: 10px;margin-right:5rem">Total Volume: ${totalVolume.toFixed(2)} m³</h3>`;
+    summaryContent += `<h3 style="text-align: right; margin-top: 10px;margin-right:1rem">Total Volume: ${totalVolume.toFixed(2)} m³</h3>`;
 
     document.getElementById("summary-content").innerHTML = summaryContent;
     
