@@ -303,6 +303,9 @@ footer{
     .operands * {
         display: none !important;
     }
+    footer*{
+        display: none !important;
+    }
     #summary-modal, #summary-modal * {
         visibility: visible !important; /* Show only the modal */
     }
