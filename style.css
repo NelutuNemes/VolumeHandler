@@ -263,23 +263,23 @@ footer{
         cursor: pointer;
     }
 
-    /* th.custom-width{
+    th.custom-width{
         width: 5.3rem;
         /* word-wrap: break-word; */
         /* overflow-wrap: break-word; */
         /* word-break: break-word; */
         /* white-space: normal; */
-    } */
+ }
 
 @media print {
     body * {
-        visibility: hidden; /* Hide everything */
+        visibility: none !important; /* Hide everything */
     }
     #summary-modal, #summary-modal * {
-        visibility: visible; /* Show only the modal */
+        visibility: block !important; /* Show only the modal */
     }
-    #print-summary-btn{
-        visibility: hidden;
+    #print-summary-btn,.close-btn{
+        visibility: none !important;
     }
     #summary-modal {
         position: absolute;
@@ -291,6 +291,10 @@ footer{
         color: black;
         padding: 20px;
         box-sizing: border-box;
+    }
+        table {
+        width: 100% !important; /* Ocupă toată lățimea */
+        border-collapse: collapse;
     }
 }
 

@@ -126,7 +126,7 @@ function updateUI() {
             createRecordTemplate("Width: ", record.widthItem.toFixed(2), "m"),
             createRecordTemplate("Height: ", record.heightItem.toFixed(2), "m"),
             createRecordTemplate("Length: ", record.lengthItem.toFixed(2), "m"),
-            createRecordTemplate("Quantity: ", record.quantityItem.toFixed(2), "m"),
+            createRecordTemplate("Quantity: ", record.quantityItem.toFixed(2), "pcs"),
             createRecordTemplate("Volume: ", record.itemVolume.toFixed(2), "m\u00B3"),
         ];
 
@@ -165,7 +165,7 @@ generateSummaryBtn.addEventListener("click", function () {
 
     // Build the summary content with all records
     let summaryContent = "<h3>All Records of session</h3>";
-    summaryContent += "<table border='1' style='width: fit-content; border-collapse: collapse; text-align: center;'>";
+    summaryContent += "<table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>";
     summaryContent += `
         <tr>
             <th class="custom-width-small">No.</th>
