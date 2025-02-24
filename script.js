@@ -165,7 +165,7 @@ generateSummaryBtn.addEventListener("click", function () {
 
     // Build the summary content with all records
     let summaryContent = "<h3>All Records of session</h3>";
-    summaryContent += "<table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>";
+    summaryContent += "<table border='1' style='width: 60%; border-collapse: collapse; text-align: center;'>";
     summaryContent += `
         <tr>
             <th class="custom-width-small">No.</th>
@@ -174,7 +174,7 @@ generateSummaryBtn.addEventListener("click", function () {
             <th class="custom-width">Length (m)</th>
             <th class="custom-width">Quantity (pcs)</th>
             <th class="custom-width">Volume (m³)</th>
-            <th class="custom-width">Obs</th>
+            <th class="custom-width-large">Observation</th>
 
         </tr>
     `;
@@ -198,7 +198,7 @@ generateSummaryBtn.addEventListener("click", function () {
     summaryContent += "</table>";
 
     // Add total volume below the table
-    summaryContent += `<h3 style="text-align: right; margin-top: 10px;">Total Volume: ${totalVolume.toFixed(2)} m³</h3>`;
+    summaryContent += `<h3 style="text-align: right; margin-top: 10px;margin-right:5rem">Total Volume: ${totalVolume.toFixed(2)} m³</h3>`;
 
     document.getElementById("summary-content").innerHTML = summaryContent;
     

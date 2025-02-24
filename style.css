@@ -283,6 +283,15 @@ footer{
         /* white-space: normal; */
  }
 
+         th.custom-width-large{
+        width: 4.4rem;
+        /* word-wrap: break-word; */
+        /* overflow-wrap: break-word; */
+        word-break: break-word;
+        /* white-space: normal; */
+ }
+
+
 
     th.custom-width{
         width: fit-content;
