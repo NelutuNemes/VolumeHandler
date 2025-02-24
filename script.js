@@ -165,7 +165,7 @@ generateSummaryBtn.addEventListener("click", function () {
 
     // Build the summary content with all records
     let summaryContent = "<h3>All Records of session</h3>";
-    summaryContent += "<table border='1' style='width: 60%; border-collapse: collapse; text-align: center;'>";
+    summaryContent += "<table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>";
     summaryContent += `
         <tr>
             <th class="custom-width-small">No.</th>
