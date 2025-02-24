@@ -316,8 +316,9 @@ footer{
     .operands * {
         display: none !important;
     }
-    footer*{
+    footer *{
         display: none !important;
+        visibility: hidden !important;
     }
     .close-btn *{
         display: none !important;
@@ -342,7 +343,7 @@ footer{
         box-sizing: border-box;
     }
         table {
-        width: 100% !important; /* Ocupă toată lățimea */
+        width: 100% !important;
         border-collapse: collapse;
     }
 }
