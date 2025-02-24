@@ -306,9 +306,13 @@ footer{
     footer*{
         display: none !important;
     }
-    #summary-modal, #summary-modal * {
-        visibility: visible !important; /* Show only the modal */
+    .close-btn *{
+        display: none !important;
     }
+    #summary-modal * {
+        visibility: visible !important;
+    }
+
     #print-summary-btn{
         visibility: hidden !important;
         display: none !important;
