@@ -172,7 +172,7 @@ generateSummaryBtn.addEventListener("click", function () {
             <th class="custom-width">Width (m)</th>
             <th class="custom-width">Height (m)</th>
             <th class="custom-width">Length (m)</th>
-            <th class="custom-width">Quantity(pcs)</th>
+            <th class="custom-width">Quantity (pcs)</th>
             <th class="custom-width">Volume (m³)</th>
             <th class="custom-width">Observations</th>
 

@@ -151,7 +151,8 @@ footer{
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding-right: 1rem;
+    padding: 0;
+    margin: 0;
     word-wrap: break-word;
     overflow-wrap: break-word;
     bottom: 0;
@@ -277,7 +278,7 @@ footer{
 
 
     th.custom-width{
-        width: 3.3rem;
+        width: 3.4rem;
         /* word-wrap: break-word; */
         /* overflow-wrap: break-word; */
         word-break: break-word;
