@@ -252,36 +252,48 @@ footer{
         background: white;
         padding: 20px;
         /* margin: 10% auto; */
-        width: 100%;
+        width: 99%;
         height: 100vh;
         text-align: center;
         /* border-radius: 10px; */
     }
     .close-btn {
-        float: right;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
         font-size: 24px;
         cursor: pointer;
     }
 
-    th.custom-width{
-        width: 5.3rem;
+        th.custom-width-small{
+        width: 1.3rem;
         /* word-wrap: break-word; */
         /* overflow-wrap: break-word; */
-        /* word-break: break-word; */
+        word-break: break-word;
+        /* white-space: normal; */
+ }
+
+
+    th.custom-width{
+        width: 3.3rem;
+        /* word-wrap: break-word; */
+        /* overflow-wrap: break-word; */
+        word-break: break-word;
         /* white-space: normal; */
  }
 
 @media print {
-    body * {
-        visibility: hidden !important; /* Hide everything */
+    .operands * {
+        display: none !important;
     }
     #summary-modal, #summary-modal * {
         visibility: visible !important; /* Show only the modal */
     }
-    #print-summary-btn,.close-btn{
+    #print-summary-btn{
         visibility: hidden !important;
         display: none !important;
-    }
+    } 
     #summary-modal {
         position: absolute;
         top: 0;
