@@ -544,3 +544,21 @@ li {
 
 
 }
+  /* for test css */
+  /* input, button {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+} */
+@media (min-width: 768px) {
+    .container {
+        width: 50%;
+    }
+}
+button {
+    transition: background-color 0.3s ease-in-out;
+}
+button:hover {
+    background-color: #007BFF;
+    color: white;
+}
