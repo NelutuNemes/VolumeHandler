@@ -306,7 +306,7 @@ footer{
 
 @media print {
 
-    body*{
+    body *{
         background-color: white;
     }
 
