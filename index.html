@@ -20,7 +20,18 @@
             </div> 
             <div class="records-block">
                 <ul id="records-list"></ul>
-                <div id="display" class="display"></div>
+                <div class="results">
+                    <div id="display" class="display"></div>
+                    <div class="price-option" id="price-option">
+                        <p id="question-text">Do you need a price estimate?</p>
+                        <div class="price-estimate-buttons">
+                            <button id="positive-btn">Yes</button>
+                            <button id="negative-btn">No</button>
+                        </div>
+                    </div>
+                </div>
+                <input type="text" id="set-price" placeholder="Set price" >
+                <div id="price-element"></div>
             </div>  
 
             <button id="generate-summary-btn">Generate Summary</button>

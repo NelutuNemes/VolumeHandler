@@ -14,17 +14,28 @@ let heightInput = document.getElementById("height");
 let lengthInput = document.getElementById("length");
 let quantityInput = document.getElementById("quantity");
 let display = document.getElementById("display");
+let priceOption = document.getElementById("price-option");
+let priceElement = document.getElementById("price-element");
+let positiveBtn = document.getElementById("positive-btn");
+let negativeBtn = document.getElementById("negative-btn");
+let setPrice = document.getElementById("set-price");
+
+
 let calculateBtn = document.getElementById("calculate-btn");
 let recordsList = document.getElementById("records-list");
 let buttons = document.querySelectorAll(".btn");
 let generateSummaryBtn = document.getElementById("generate-summary-btn");
 
-
-
 calculateBtn.addEventListener("click", addRecord);
+positiveBtn.addEventListener("click", () => {
+        setPrice.classList.add("isVisible");
+
+});
+setPrice.addEventListener("input", getPrice);
 
 //array to store records
 let records = [];
+let tempVolume = 0;
 log(`Start records list: ${JSON.stringify(records)}`);
 
 
@@ -57,6 +68,13 @@ function addRecord() {
         totalVolume();
         updateUI();
 
+    // Perform check for an existing price 
+        let currentPrice = parseFloat(setPrice.value.trim());
+        if (currentPrice && !isNaN(currentPrice)) {
+            log(`Recalculating price with updated volume and price: ${currentPrice}`);
+            estimatePrice(currentPrice); // Recalculation of total price
+        }
+
     };
 
     widthInput.value = "";
@@ -80,6 +98,34 @@ function totalVolume() {
     })
     log(`Final Grand total: ${grandTotalVolume}`);
     display.textContent = `Total Volume: ${grandTotalVolume.toFixed(2)} mc`;
+    setTimeout(() => {
+        priceOption.classList.add("isVisible");
+    }, 1500);
+    tempVolume = grandTotalVolume;
+    // if(setPrice.le)
+}
+
+function getPrice() {
+    let currentPrice = parseFloat(setPrice.value.trim());
+    log(`Current price is: ${currentPrice}`);
+    log(`set price length is: ${currentPrice.length}`);
+
+    if (currentPrice && !isNaN(currentPrice)) {
+        estimatePrice(currentPrice);
+    } else {
+        alert("Invalid price. Please enter a valid number !");
+        log(`Invalid price. Please enter a valid number !`);
+    }
+}
+
+function estimatePrice(currentPrice) {
+        log(`Temp volume is: ${tempVolume}`)
+        let currentVolume = parseFloat(tempVolume);
+        let tempPrice = currentVolume * currentPrice;
+        priceElement.textContent = tempPrice.toFixed(2
+
+        );
+        priceElement.classList.add("isVisible");
 }
 
 function deleteRecord(recordID) {
@@ -88,6 +134,12 @@ function deleteRecord(recordID) {
     );
     updateUI();
     totalVolume();
+    // Perform check for an existing price 
+        let currentPrice = parseFloat(setPrice.value.trim());
+        if (currentPrice && !isNaN(currentPrice)) {
+            log(`Recalculating price with updated volume and price: ${currentPrice}`);
+            estimatePrice(currentPrice); // Recalculation of total price
+        }
     log(`Records list after delete record is : ${JSON.stringify(records)}`);
      
     if (records.length === 0) {
