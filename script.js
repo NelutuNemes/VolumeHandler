@@ -16,6 +16,7 @@ let quantityInput = document.getElementById("quantity");
 let display = document.getElementById("display");
 let priceOption = document.getElementById("price-option");
 let priceElement = document.getElementById("price-element");
+let priceCurrency = document.getElementById("price-currency");
 let positiveBtn = document.getElementById("positive-btn");
 let negativeBtn = document.getElementById("negative-btn");
 let setPrice = document.getElementById("set-price");
@@ -27,10 +28,9 @@ let buttons = document.querySelectorAll(".btn");
 let generateSummaryBtn = document.getElementById("generate-summary-btn");
 
 calculateBtn.addEventListener("click", addRecord);
-positiveBtn.addEventListener("click", () => {
-        setPrice.classList.add("isVisible");
+positiveBtn.addEventListener("click", withPrice);
+negativeBtn.addEventListener("click", withoutPrice);
 
-});
 setPrice.addEventListener("input", getPrice);
 
 //array to store records
@@ -97,7 +97,7 @@ function totalVolume() {
         
     })
     log(`Final Grand total: ${grandTotalVolume}`);
-    display.textContent = `Total Volume: ${grandTotalVolume.toFixed(2)} mc`;
+    display.textContent = `Total Volume: ${grandTotalVolume.toFixed(2)}  m\u00B3`;
     setTimeout(() => {
         priceOption.classList.add("isVisible");
     }, 1500);
@@ -121,12 +121,26 @@ function getPrice() {
 function estimatePrice(currentPrice) {
         log(`Temp volume is: ${tempVolume}`)
         let currentVolume = parseFloat(tempVolume);
-        let tempPrice = currentVolume * currentPrice;
-        priceElement.textContent = tempPrice.toFixed(2
+    let tempPrice = currentVolume * currentPrice;
+    let formatedPrice = new Intl.NumberFormat('ro-RO', {
+        style:'currency',
+        currency:'RON'
+    }).format(tempPrice)
+        priceElement.textContent =`The estimated total price is : ${formatedPrice}` ;
+    
+    priceElement.classList.add("isVisible");
+    priceCurrency.classList.add("isVisible");
 
-        );
-        priceElement.classList.add("isVisible");
 }
+function withPrice() {
+      setPrice.classList.add("isVisible");
+    priceCurrency.classList.add("isVisible");
+}
+function withoutPrice() {
+    setPrice.classList.remove("isVisible");
+    priceCurrency.classList.remove("isVisible");
+}
+
 
 function deleteRecord(recordID) {
     records = records.filter((record) =>
@@ -214,6 +228,11 @@ generateSummaryBtn.addEventListener("click", function () {
 
     // Initialize total volume
     let totalVolume = 0;
+    // Get the current price (if available)
+    let currentPrice = parseFloat(setPrice.value.trim());
+    if (isNaN(currentPrice)) {
+        currentPrice = 0; // Default to 0 if no valid price is set
+    }
 
     // Build the summary content with all records
     let summaryContent = "<h3>All Records of session</h3>";
@@ -249,9 +268,28 @@ generateSummaryBtn.addEventListener("click", function () {
 
     summaryContent += "</table>";
 
-    // Add total volume below the table
-    summaryContent += `<h3 style="text-align: right; margin-top: 10px;margin-right:1rem">Total Volume: ${totalVolume.toFixed(2)} m³</h3>`;
 
+    // Calculate estimated price
+    let estimatedPrice = totalVolume * currentPrice;
+    let formattedPrice = new Intl.NumberFormat('ro-RO', {
+        style: 'currency',
+        currency: 'RON'
+    }).format(estimatedPrice);
+
+    // Add total volume below the table
+    summaryContent +=
+    `
+    <h3 style="text-align: right; margin-top: 10px;margin-right:1rem">
+        Total Volume: ${totalVolume.toFixed(2)} m³</h3>
+    </h3>
+    <h3 style="text-align: right; margin-right:1rem">
+        Set Price: ${currentPrice > 0 ? currentPrice + " RON/m³" : "Not Set"}
+    </h3>
+    <h3 style="text-align: right; margin-right:1rem">
+        Estimated Total Price: ${formattedPrice}
+    </h3>
+    `;
+    
     document.getElementById("summary-content").innerHTML = summaryContent;
     
     // Show the modal
