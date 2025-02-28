@@ -93,7 +93,7 @@ body{
     /* margin-top: 2rem; */
     right: 0;
     margin-top: 2rem;
-    transform: translatex(-75%);
+    transform: translatex(-40%);
     transition: transform 2s ease;
     position: absolute;
 }
