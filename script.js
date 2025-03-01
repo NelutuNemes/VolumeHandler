@@ -99,11 +99,13 @@ function totalVolume() {
     log(`Final Grand total: ${grandTotalVolume}`);
     display.textContent = `Total Volume: ${grandTotalVolume.toFixed(2)}  m\u00B3`;
     setTimeout(() => {
+        priceOption.classList.remove("isHidden");
         priceOption.classList.add("isVisible");
     }, 1500);
     tempVolume = grandTotalVolume;
-    // if(setPrice.le)
+    // withPrice();
 }
+
 
 function getPrice() {
     let currentPrice = parseFloat(setPrice.value.trim());
@@ -133,12 +135,14 @@ function estimatePrice(currentPrice) {
 
 }
 function withPrice() {
-      setPrice.classList.add("isVisible");
+    setPrice.classList.add("isVisible");
     priceCurrency.classList.add("isVisible");
+    priceOption.classList.remove("isHidden");
 }
 function withoutPrice() {
     setPrice.classList.remove("isVisible");
     priceCurrency.classList.remove("isVisible");
+    priceOption.classList.add("isHidden");
 }
 
 
@@ -158,6 +162,12 @@ function deleteRecord(recordID) {
      
     if (records.length === 0) {
         display.classList.remove("display-visible");
+        setPrice.classList.remove("isVisible");
+        priceElement.classList.add("isHidden");
+        priceCurrency.classList.add("isHidden");
+        priceOption.classList.add("isHidden");
+
+
     }
 }
 
@@ -282,12 +292,20 @@ generateSummaryBtn.addEventListener("click", function () {
     <h3 style="text-align: right; margin-top: 10px;margin-right:1rem">
         Total Volume: ${totalVolume.toFixed(2)} m³</h3>
     </h3>
-    <h3 style="text-align: right; margin-right:1rem">
-        Set Price: ${currentPrice > 0 ? currentPrice + " RON/m³" : "Not Set"}
-    </h3>
+    
+    ${currentPrice > 0 ?
+    `<h3 style="text-align: right; margin-right:1rem">
+        Set Price: ${currentPrice}  RON/m³
+        </h3> 
+    
+   
     <h3 style="text-align: right; margin-right:1rem">
         Estimated Total Price: ${formattedPrice}
-    </h3>
+        </h3>`
+         
+        : ""
+    }
+
     `;
     
     document.getElementById("summary-content").innerHTML = summaryContent;
