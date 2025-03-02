@@ -11,7 +11,7 @@ body{
     /* margin-left: 0.1rem; */
     color: rgb(149, 227, 31);
     font-size: 1.3rem;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 #title-text{
     background-color: rgba(0, 0, 0, 0.5);
@@ -19,8 +19,8 @@ body{
     padding: 0.2rem;
 }
 .container{
-    /* background-color: black; */
-    background-image: url('resources/image/timber.jpeg');
+    background-color: black;
+    /* background-image: url('resources/image/timber.jpeg'); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -37,6 +37,10 @@ body{
 }
 
 /* test  */
+.imgContainer{
+ background-image: url('resources/image/timber.jpeg');
+}
+
 .darkBackground{
     background-color: rgba(0, 0, 0, 0.5);
     border: 1px solid greenyellow;

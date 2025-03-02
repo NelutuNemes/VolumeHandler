@@ -8,7 +8,7 @@ let log = (message) => {
 log(`Test !`);
 
 //get reference to the DOM elements
-
+let container = document.getElementById("container");
 let widthInput = document.getElementById("width");
 let heightInput = document.getElementById("height");
 let lengthInput = document.getElementById("length");
@@ -20,6 +20,8 @@ let priceCurrency = document.getElementById("price-currency");
 let positiveBtn = document.getElementById("positive-btn");
 let negativeBtn = document.getElementById("negative-btn");
 let setPrice = document.getElementById("set-price");
+
+container.classList.add("imgContainer");
 
 
 let calculateBtn = document.getElementById("calculate-btn");
@@ -70,16 +72,13 @@ function addRecord() {
             itemVolume:recordWidth * recordHeight * recordLength * recordQuantity
         }
         records.push(record);
-        recordsList.classList.add("darkBackground");
-        priceOption.classList.add("darkBackground");
-        display.classList.add("darkBackground");
-        priceCurrency.classList.add("darkBackground2");
-        priceElement.classList.add("darkBackground");
-        generateSummaryBtn.classList.add("darkBackground3");
-
-
-
-
+        // recordsList.classList.add("darkBackground");
+        // priceOption.classList.add("darkBackground");
+        // display.classList.add("darkBackground");
+        // priceCurrency.classList.add("darkBackground2");
+        // priceElement.classList.add("darkBackground");
+        // generateSummaryBtn.classList.add("darkBackground3");
+        container.classList.remove("imgContainer");
         totalVolume();
         updateUI();
 
