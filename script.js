@@ -104,6 +104,7 @@ function totalVolume() {
     setTimeout(() => {
         priceOption.classList.remove("isHidden");
         priceOption.classList.add("isVisible");
+        generateSummaryBtn.classList.add("display-visible");
     }, 1500);
     tempVolume = grandTotalVolume;
     // withPrice();
@@ -164,26 +165,44 @@ function deleteRecord(recordID) {
     records = records.filter((record) =>
         recordID !== record.id
     );
-    updateUI();
     totalVolume();
+
     // Perform check for an existing price 
-        let currentPrice = parseFloat(setPrice.value.trim());
-        if (currentPrice && !isNaN(currentPrice)) {
-            log(`Recalculating price with updated volume and price: ${currentPrice}`);
-            estimatePrice(currentPrice); // Recalculation of total price
-        }
-    log(`Records list after delete record is : ${JSON.stringify(records)}`);
-     
-    if (records.length === 0) {
-        display.classList.remove("display-visible");
-        setPrice.classList.remove("isVisible");
-        priceElement.classList.add("isHidden");
-        priceCurrency.classList.add("isHidden");
-        priceOption.classList.add("isHidden");
+        let currentPrice = parseFloat(setPrice.value.trim()) || 0;
+    if (records.length > 0) {
+        estimatePrice(currentPrice);
+        updateUI(); // if has data update UI
+    } else {
+        location.reload(); // Page fully reload
 
-
+        log(`Records list after delete: ${JSON.stringify(records)}`);
     }
+        log("Application has been fully reset!");
+
 }
+
+// function resetApp() {
+//     records = []; // clean all records
+//     recordsList.innerHTML = "";//clean list of records
+//     display.innerHTML = ""; // emptydisplay
+//     setPrice.value = ""; // Reset price input
+//     priceElement.textContent = ""; //clean price
+//     priceCurrency.textContent = "";
+    
+//     // hide all elements for results and calculation
+//     display.classList.remove("display-visible");
+//     setPrice.classList.remove("isVisible");
+//     priceElement.classList.add("isHidden");
+//     priceCurrency.classList.add("isHidden");
+//     priceOption.classList.a("isVisible");
+
+//     // Reset UI modal section
+//     document.getElementById("summary-content").innerHTML = "";
+//     document.getElementById("summary-modal").style.display = "none";
+
+//     log("Application has been fully reset!");
+// }
+
 
 function createRecordTemplate(label,value, units) {
     let labelDiv = document.createElement("div");
@@ -238,6 +257,7 @@ function updateUI() {
         recordsList.appendChild(recordLiElement)
 
     });
+
     log(`Display updated !`);
 }
 
