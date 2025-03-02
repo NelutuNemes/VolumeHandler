@@ -45,6 +45,9 @@ log(`Start records list: ${JSON.stringify(records)}`);
 //main function for add records
 
 function addRecord() {
+
+
+
     const recordWidth = Number(widthInput.value.trim().replace(",", "."));
     const recordHeight = Number(heightInput.value.trim().replace(",", "."));
     const recordLength = Number(lengthInput.value.trim().replace(",", "."));
@@ -67,6 +70,15 @@ function addRecord() {
             itemVolume:recordWidth * recordHeight * recordLength * recordQuantity
         }
         records.push(record);
+        recordsList.classList.add("darkBackground");
+        priceOption.classList.add("darkBackground");
+        display.classList.add("darkBackground");
+        priceCurrency.classList.add("darkBackground2");
+        priceElement.classList.add("darkBackground");
+        generateSummaryBtn.classList.add("darkBackground3");
+
+
+
 
         totalVolume();
         updateUI();
