@@ -63,7 +63,8 @@ body{
     width: 100%;
     display: flex;
     flex-direction: column;
-justify-content: center;    gap: 2rem;
+    /* justify-content: center; */
+    gap: 2rem;
     position: relative;
 }
 .display{
@@ -326,6 +327,7 @@ footer{
 
 .isHidden {
     display: none !important;
+    visibility: hidden;
 }
 
 #toggle-keyboard {

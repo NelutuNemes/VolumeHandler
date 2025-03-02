@@ -35,7 +35,10 @@ setPrice.addEventListener("input", getPrice);
 
 //array to store records
 let records = [];
+//handler variable
 let tempVolume = 0;
+let priceFlag = true;
+
 log(`Start records list: ${JSON.stringify(records)}`);
 
 
@@ -136,13 +139,24 @@ function estimatePrice(currentPrice) {
 }
 function withPrice() {
     setPrice.classList.add("isVisible");
+    priceCurrency.classList.remove("isHidden");
     priceCurrency.classList.add("isVisible");
     priceOption.classList.remove("isHidden");
+    priceElement.classList.remove("isHidden");
+    // priceElement.classList.add("isVisible");
+
+    priceFlag = true;
 }
+
+
 function withoutPrice() {
     setPrice.classList.remove("isVisible");
     priceCurrency.classList.remove("isVisible");
-    priceOption.classList.add("isHidden");
+    priceCurrency.classList.add("isHidden");
+    // priceOption.classList.add("isHidden");
+    // priceElement.classList.remove("isVisible");
+    priceElement.classList.add("isHidden");
+    priceFlag = false;
 }
 
 
@@ -293,7 +307,7 @@ generateSummaryBtn.addEventListener("click", function () {
         Total Volume: ${totalVolume.toFixed(2)} m³</h3>
     </h3>
     
-    ${currentPrice > 0 ?
+    ${(priceFlag) ?
     `<h3 style="text-align: right; margin-right:1rem">
         Set Price: ${currentPrice}  RON/m³
         </h3> 
