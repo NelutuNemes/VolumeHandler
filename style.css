@@ -270,7 +270,7 @@ footer{
     /* border: 1px solid black; */
 }
 #footer-text{
-    font-size: 1rem;
+    font-size: 0.3rem;
     color: black;
 }
 .btn-container{
@@ -662,7 +662,7 @@ li {
 
     footer{
         font-size: 0.2rem;
-        text-align: justify;
+        text-align: center;
     }
 
 
