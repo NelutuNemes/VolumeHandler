@@ -20,6 +20,13 @@ let priceCurrency = document.getElementById("price-currency");
 let positiveBtn = document.getElementById("positive-btn");
 let negativeBtn = document.getElementById("negative-btn");
 let setPrice = document.getElementById("set-price");
+let totalVolumeTitle = document.getElementById("total-volume-title");
+let totalVolumeValue = document.getElementById("total-volume-value");
+
+
+// Butoane pentru schimbarea limbii
+let langRo = document.getElementById("lang-ro");
+let langEn = document.getElementById("lang-en");
 
 container.classList.add("imgContainer");
 
@@ -41,15 +48,126 @@ let records = [];
 let tempVolume = 0;
 let priceFlag = true;
 
+
+//test toggle lang
+// ✅ Inițializare i18next
+i18next.init({
+    lng: "ro", // Limba implicită
+    resources: {
+        ro: {
+            translation: {
+                appTitle: "TimberMetrics",
+                width: "Lățime",
+                height: "Înălțime",
+                length: "Lungime",
+                quantity: "Cantitate",
+                recordVolume:"Volum:",
+                addRecord: "Adaugă înregistrare",
+                totalVolume: "Volum total :",
+                needPrice: "Aveți nevoie de o estimare a prețului?",
+                yes: "Da",
+                no: "Nu",
+                setPricePlaceholder: "Setează prețul",
+                priceUnit: "RON / m³",
+                generateSummary: "Generează rezumat",
+                sessionSummary: "Rezumatul sesiunii:",
+                printSummary: "Printează rezumat",
+                delete: "Șterge",
+                estimatedTotalPrice: "Preț total estimat: ",
+                recordHead: "Nr.",
+                estimatedPrice: "Pretul estimat este :",
+                allRecords: "Inregistrarile acestei sesiuni sunt:",
+                pieces: "buc",
+                obs: "Observatii",
+                setPrice: "Pretul curent folosit la calcul:"
+                
+            }
+        },
+        en: {
+            translation: {
+                appTitle: "TimberMetrics",
+                width: "Width",
+                height: "Height",
+                length: "Length",
+                quantity: "Quantity",
+                recordVolume:"Volume:",
+                addRecord: "Add Record",
+                totalVolume: "Total volume :",
+                needPrice: "Do you need a price estimate?",
+                yes: "Yes",
+                no: "No",
+                setPricePlaceholder: "Set price",
+                priceUnit: "EUR / m³",
+                generateSummary: "Generate Summary",
+                sessionSummary: "Session Summary:",
+                printSummary: "Print Summary",
+                delete: "Delete",
+                estimatedTotalPrice: "Estimated Total Price: ",
+                recordHead: "No.",
+                estimatedPrice: "The estimated total price is:",
+                allRecords:"All Records of session:",
+                pieces: "pcs",
+                obs: "Observation",
+                setPrice: "The current price used in the calculation:"
+
+
+            }
+        }
+    }
+});
+
+// ✅ Funcția pentru schimbarea limbii
+function changeLanguage(lang) {
+    i18next.changeLanguage(lang, () => {
+        document.getElementById("title-text").textContent = i18next.t("appTitle");
+        document.getElementById("width").placeholder = i18next.t("width");
+        document.getElementById("height").placeholder = i18next.t("height");
+        document.getElementById("length").placeholder = i18next.t("length");
+        document.getElementById("quantity").placeholder = i18next.t("quantity");
+        document.getElementById("calculate-btn").textContent = i18next.t("addRecord");
+        document.getElementById("question-text").textContent = i18next.t("needPrice");
+        document.getElementById("positive-btn").textContent = i18next.t("yes");
+        document.getElementById("negative-btn").textContent = i18next.t("no");
+        document.getElementById("set-price").placeholder = i18next.t("setPricePlaceholder");
+        document.getElementById("price-currency").textContent = i18next.t("priceUnit");
+        document.getElementById("generate-summary-btn").textContent = i18next.t("generateSummary");
+        document.querySelector(".modal-content h2").textContent = i18next.t("sessionSummary");
+        document.getElementById("print-summary-btn").textContent = i18next.t("printSummary");
+        totalVolumeTitle.textContent = i18next.t("totalVolume");
+
+        // Actualizarea butoanelor de ștergere
+        document.querySelectorAll("#delete-record-btn").forEach(btn => {
+            btn.textContent = i18next.t("delete");
+        });
+
+    });
+
+    if (records.length <= 0) {
+        return;
+    } else {
+        updateUI();
+    }
+
+    if (priceElement.textContent.trim() !== "") {
+    let currentPrice = parseFloat(setPrice.value.trim()) || 0;
+    estimatePrice(currentPrice);
+}
+
+}
+// Adăugare evenimente pentru schimbarea limbii
+langRo.addEventListener("click", () => changeLanguage("ro"));
+langEn.addEventListener("click", () => changeLanguage("en"));
+
+// Setarea inițială a limbii (implicit română)
+changeLanguage("ro");
+
+
 log(`Start records list: ${JSON.stringify(records)}`);
 
 
 //main function for add records
 
 function addRecord() {
-
-
-
     const recordWidth = Number(widthInput.value.trim().replace(",", "."));
     const recordHeight = Number(heightInput.value.trim().replace(",", "."));
     const recordLength = Number(lengthInput.value.trim().replace(",", "."));
@@ -72,12 +190,6 @@ function addRecord() {
             itemVolume:recordWidth * recordHeight * recordLength * recordQuantity
         }
         records.push(record);
-        // recordsList.classList.add("darkBackground");
-        // priceOption.classList.add("darkBackground");
-        // display.classList.add("darkBackground");
-        // priceCurrency.classList.add("darkBackground2");
-        // priceElement.classList.add("darkBackground");
-        // generateSummaryBtn.classList.add("darkBackground3");
         container.classList.remove("imgContainer");
         totalVolume();
         updateUI();
@@ -111,7 +223,8 @@ function totalVolume() {
         
     })
     log(`Final Grand total: ${grandTotalVolume}`);
-    display.textContent = `Total Volume: ${grandTotalVolume.toFixed(2)}  m\u00B3`;
+    totalVolumeTitle.textContent = `${i18next.t("totalVolume")}`
+    totalVolumeValue.textContent = `${grandTotalVolume.toFixed(2)}  m\u00B3`;
     setTimeout(() => {
         priceOption.classList.remove("isHidden");
         priceOption.classList.add("isVisible");
@@ -136,19 +249,25 @@ function getPrice() {
 }
 
 function estimatePrice(currentPrice) {
-        log(`Temp volume is: ${tempVolume}`)
-        let currentVolume = parseFloat(tempVolume);
+    log(`Temp volume is: ${tempVolume}`);
+    let currentVolume = parseFloat(tempVolume);
     let tempPrice = currentVolume * currentPrice;
-    let formatedPrice = new Intl.NumberFormat('ro-RO', {
-        style:'currency',
-        currency:'RON'
-    }).format(tempPrice)
-        priceElement.textContent =`The estimated total price is : ${formatedPrice}` ;
-    
+
+    // Determinarea monedei și formatului în funcție de limba activă
+    let currency = i18next.language === "ro" ? "RON" : "EUR";
+    let locale = i18next.language === "ro" ? "ro-RO" : "en-US";
+
+    let formattedPrice = new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: currency
+    }).format(tempPrice);
+
+    // Actualizarea interfeței
+    priceElement.textContent = `${i18next.t("estimatedPrice")} ${formattedPrice}`;
     priceElement.classList.add("isVisible");
     priceCurrency.classList.add("isVisible");
-
 }
+
 function withPrice() {
     setPrice.classList.add("isVisible");
     priceCurrency.classList.remove("isHidden");
@@ -192,27 +311,6 @@ function deleteRecord(recordID) {
 
 }
 
-// function resetApp() {
-//     records = []; // clean all records
-//     recordsList.innerHTML = "";//clean list of records
-//     display.innerHTML = ""; // emptydisplay
-//     setPrice.value = ""; // Reset price input
-//     priceElement.textContent = ""; //clean price
-//     priceCurrency.textContent = "";
-    
-//     // hide all elements for results and calculation
-//     display.classList.remove("display-visible");
-//     setPrice.classList.remove("isVisible");
-//     priceElement.classList.add("isHidden");
-//     priceCurrency.classList.add("isHidden");
-//     priceOption.classList.a("isVisible");
-
-//     // Reset UI modal section
-//     document.getElementById("summary-content").innerHTML = "";
-//     document.getElementById("summary-modal").style.display = "none";
-
-//     log("Application has been fully reset!");
-// }
 
 
 function createRecordTemplate(label,value, units) {
@@ -242,12 +340,12 @@ function updateUI() {
         let recordLiElement = document.createElement("li");
 
         let recordElements = [
-            createRecordTemplate("No.", counter),
-            createRecordTemplate("Width: ", record.widthItem.toFixed(2), "m"),
-            createRecordTemplate("Height: ", record.heightItem.toFixed(2), "m"),
-            createRecordTemplate("Length: ", record.lengthItem.toFixed(2), "m"),
-            createRecordTemplate("Quantity: ", record.quantityItem.toFixed(2), "pcs"),
-            createRecordTemplate("Volume: ", record.itemVolume.toFixed(2), "m\u00B3"),
+            createRecordTemplate(`${i18next.t("recordHead")}`, counter),
+            createRecordTemplate(`${i18next.t("width")}:`, record.widthItem.toFixed(2), "m"),
+            createRecordTemplate(`${i18next.t("height")}:`, record.heightItem.toFixed(2), "m"),
+            createRecordTemplate(`${i18next.t("length")}:`, record.lengthItem.toFixed(2), "m"),
+            createRecordTemplate(`${i18next.t("quantity")}:`, record.quantityItem.toFixed(2), "pcs"),
+            createRecordTemplate(`${i18next.t("recordVolume")}`, record.itemVolume.toFixed(2), "m\u00B3"),
         ];
 
         recordElements.forEach(([label, value, units]) => {
@@ -290,17 +388,17 @@ generateSummaryBtn.addEventListener("click", function () {
     }
 
     // Build the summary content with all records
-    let summaryContent = "<h3>All Records of session</h3>";
+    let summaryContent = `<h3>${i18next.t("allRecords")}</h3>`;
     summaryContent += "<table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>";
     summaryContent += `
         <tr>
-            <th class="custom-width-small">No.</th>
-            <th class="custom-width">Width (m)</th>
-            <th class="custom-width">Height (m)</th>
-            <th class="custom-width">Length (m)</th>
-            <th class="custom-width">Quantity (pcs)</th>
-            <th class="custom-width">Volume (m³)</th>
-            <th class="custom-width-large">Observation</th>
+            <th class="custom-width-small">${i18next.t("recordHead")}</th>
+            <th class="custom-width">${i18next.t("width")} (m)</th>
+            <th class="custom-width">${i18next.t("height")} (m)</th>
+            <th class="custom-width">${i18next.t("length")} (m)</th>
+            <th class="custom-width">${i18next.t("quantity")} (${i18next.t("pieces")})</th>
+            <th class="custom-width">${i18next.t("recordVolume")} (m³)</th>
+            <th class="custom-width-large">${i18next.t("obs")}</th>
 
         </tr>
     `;
@@ -335,21 +433,18 @@ generateSummaryBtn.addEventListener("click", function () {
     summaryContent +=
     `
     <h3 style="text-align: right; margin-top: 10px;margin-right:1rem">
-        Total Volume: ${totalVolume.toFixed(2)} m³</h3>
+        ${i18next.t("totalVolume")} ${totalVolume.toFixed(2)} m³</h3>
     </h3>
     
-    ${(priceFlag) ?
-    `<h3 style="text-align: right; margin-right:1rem">
-        Set Price: ${currentPrice}  RON/m³
-        </h3> 
-    
-   
-    <h3 style="text-align: right; margin-right:1rem">
-        Estimated Total Price: ${formattedPrice}
-        </h3>`
-         
-        : ""
-    }
+${(priceFlag) ?
+`<h3 style="text-align: right; margin-right: 1rem;">
+    ${i18next.t("setPrice")} ${currentPrice} ${(i18next.language === "ro" ? 'RON/m³' : 'EUR/m³')}
+</h3> 
+
+<h3 style="text-align: right; margin-right: 1rem;">
+    ${i18next.t("estimatedPrice")} ${estimatedPrice.toFixed(2)} ${(i18next.language === "ro" ? 'RON' : 'EUR')}
+</h3>`
+: ""}
 
     `;
     

@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Volume Handler</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/23.0.1/i18next.min.js"></script>
+
 </head>
 <body>
     <header></header>
     <main>
         <div class="container" id="container">
+                <div class="header">
+        <button id="lang-ro" class="lang-btn"><img src="resources/image/ro-flag.png" alt="Română" width="30"></button>
+        <button id="lang-en" class="lang-btn"><img src="resources/image/uk-flag.png" alt="English" width="30"></button>
+    </div>
+
             <p id="app-title"><span id="title-text">TimberMetrics</span></p>
             <div class="operands">           
             <input type="text" class="operand" id="width" placeholder="Width" inputmode="decimal"  pattern="[0-9]+(\.[0-9]+)?">
@@ -21,7 +28,10 @@
             <div class="records-block">
                 <ul id="records-list"></ul>
                 <div class="results">
-                    <div id="display" class="display"></div>
+                    <div id="display" class="display">
+                        <div id="total-volume-title"></div>
+                        <div id="total-volume-value"></div>
+                    </div>
                     <div class="price-option" id="price-option">
                         <p id="question-text">Do you need a price estimate ?</p>
                         <div class="price-estimate-buttons">
