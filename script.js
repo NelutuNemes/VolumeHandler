@@ -64,7 +64,7 @@ i18next.init({
                 recordVolume:"Volum:",
                 addRecord: "Adaugă înregistrare",
                 totalVolume: "Volum total :",
-                needPrice: "Aveți nevoie de o estimare a prețului?",
+                needPrice: "Doriti o estimare de preț?",
                 yes: "Da",
                 no: "Nu",
                 setPricePlaceholder: "Setează prețul",
