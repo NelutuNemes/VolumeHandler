@@ -203,6 +203,13 @@ function addRecord() {
 
     };
 
+    //no price estimate user choice
+        if (!priceFlag) {
+        priceOption.classList.remove("isHidden");
+        priceOption.classList.add("isVisible");
+        priceFlag = true;
+    }
+
     widthInput.value = "";
     heightInput.value = "";
     lengthInput.value = "";
@@ -284,8 +291,7 @@ function withoutPrice() {
     setPrice.classList.remove("isVisible");
     priceCurrency.classList.remove("isVisible");
     priceCurrency.classList.add("isHidden");
-    // priceOption.classList.add("isHidden");
-    // priceElement.classList.remove("isVisible");
+    priceOption.classList.add("isHidden");
     priceElement.classList.add("isHidden");
     priceFlag = false;
 }
