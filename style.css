@@ -205,6 +205,7 @@ body{
 #set-price{
     display: none;
     width: fit-content;
+    max-width: 5.5rem;
     height: fit-content;
     background: transparent;
     color: black;
@@ -577,6 +578,7 @@ footer{
 @media (max-width: 450px) {
     .container {
         width: 90%;
+        max-width: 90%;
         padding: 0.5rem;
         min-height: auto;
     }
