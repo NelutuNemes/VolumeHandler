@@ -197,10 +197,24 @@ body{
     border-radius: 6px;
     margin-top: 2rem;
 } */
+#wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: self-start;
+    border: 1px solid white;
+    max-width: 80vw;
+    padding: 0.3rem;
+
+}
+
 .price-input{
     display: flex;
     flex-direction: row;
     gap: 1rem;
+    border: 1px solid white;
+    max-width: 80%;
+    min-height: 4rem;
+    padding: 0.1rem;
 }
 #set-price{
     display: none;
