@@ -51,6 +51,12 @@ body{
     box-sizing: border-box;
     border-radius: 12px;
 }
+/* test control input behavior  */
+
+input:focus {
+            touch-action: none;
+        }
+
 
 /* test  */
 .imgContainer{
