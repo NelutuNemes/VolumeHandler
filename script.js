@@ -469,3 +469,5 @@ document.querySelector(".close-btn").addEventListener("click", function() {
 document.getElementById("print-summary-btn").addEventListener("click", function() {
     window.print();
 });
+
+
