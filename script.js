@@ -7,6 +7,16 @@ let log = (message) => {
 }
 log(`Test !`);
 
+//test fix control input behavior
+document.addEventListener('focusin', () => {
+  document.body.style.overflow = 'hidden';
+});
+
+document.addEventListener('focusout', () => {
+  document.body.style.overflow = 'auto';
+});
+
+
 //get reference to the DOM elements
 let container = document.getElementById("container");
 let widthInput = document.getElementById("width");
