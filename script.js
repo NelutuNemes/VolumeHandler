@@ -469,3 +469,15 @@ document.querySelector(".close-btn").addEventListener("click", function() {
 document.getElementById("print-summary-btn").addEventListener("click", function() {
     window.print();
 });
+
+
+//test control input behavior
+document.querySelectorAll("input").forEach(inputElement => {
+            inputElement.addEventListener("touchstart", function(e) {
+                e.preventDefault();
+            }, false);
+
+            inputElement.addEventListener("touchmove", function(e) {
+                e.preventDefault();
+            }, false);
+        });
