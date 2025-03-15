@@ -57,6 +57,7 @@ let records = [];
 //handler variable
 let tempVolume = 0;
 let priceFlag = true;
+let recordPrice;
 
 
 //test toggle lang
@@ -85,6 +86,7 @@ i18next.init({
                 delete: "Șterge",
                 estimatedTotalPrice: "Preț total estimat: ",
                 recordHead: "Nr.",
+                recordPrice: "Pret :",
                 estimatedPrice: "Pretul estimat este :",
                 allRecords: "Inregistrarile acestei sesiuni sunt:",
                 pieces: "buc",
@@ -114,6 +116,7 @@ i18next.init({
                 delete: "Delete",
                 estimatedTotalPrice: "Estimated Total Price: ",
                 recordHead: "No.",
+                recordPrice: "Price :",
                 estimatedPrice: "The estimated total price is:",
                 allRecords:"All Records of session:",
                 pieces: "pcs",
@@ -177,11 +180,12 @@ log(`Start records list: ${JSON.stringify(records)}`);
 
 //main function for add records
 
-function addRecord() {
+function addRecord(currentPrice) {
     const recordWidth = Number(widthInput.value.trim().replace(",", "."));
     const recordHeight = Number(heightInput.value.trim().replace(",", "."));
     const recordLength = Number(lengthInput.value.trim().replace(",", "."));
     const recordQuantity = Number(quantityInput.value.trim().replace(",", "."));
+    
     
     if (isNaN(recordWidth) || isNaN(recordHeight) || isNaN(recordLength) || isNaN(recordQuantity) ||
     recordWidth <= 0 || recordHeight <= 0 || recordLength <= 0 || recordQuantity <= 0) {
@@ -197,7 +201,9 @@ function addRecord() {
             heightItem: recordHeight,
             lengthItem: recordLength,
             quantityItem: recordQuantity,
-            itemVolume:recordWidth * recordHeight * recordLength * recordQuantity
+            itemVolume: recordWidth * recordHeight * recordLength * recordQuantity,
+            itemPrice: (recordWidth * recordHeight * recordLength) * currentPrice
+            
         }
         records.push(record);
         container.classList.remove("imgContainer");
@@ -267,8 +273,33 @@ function getPrice() {
 
 function estimatePrice(currentPrice) {
     log(`Temp volume is: ${tempVolume}`);
-    let currentVolume = parseFloat(tempVolume);
-    let tempPrice = currentVolume * currentPrice;
+    let totalPrice = 0;
+
+    // Verificăm dacă checkbox-ul este bifat
+    let isRoundingEnabled = document.getElementById("roundingCheckbox").checked;
+
+    records.forEach(record => {
+        // Calculăm volumul per bucata
+        let volumePerPiece = record.widthItem * record.heightItem * record.lengthItem;
+        
+        // Calculăm prețul per bucata
+        let pricePerPiece = volumePerPiece * currentPrice;
+
+        // Aplicăm Math.ceil() DOAR dacă height > 0.05m și checkbox-ul este bifat
+        if (isRoundingEnabled && record.heightItem > 0.05) {
+            pricePerPiece = Math.ceil(pricePerPiece);
+        }
+
+        // Calculăm prețul total pentru acest record
+        let finalPricePerRecord = pricePerPiece * record.quantityItem;
+
+        // Adăugăm la prețul total
+        totalPrice += finalPricePerRecord;
+        
+        // Salvăm volumul și prețul individual în obiectul record
+        record.itemVolume = volumePerPiece * record.quantityItem;
+        record.individualPrice = finalPricePerRecord;
+    });
 
     // Determinarea monedei și formatului în funcție de limba activă
     let currency = i18next.language === "ro" ? "RON" : "EUR";
@@ -277,13 +308,17 @@ function estimatePrice(currentPrice) {
     let formattedPrice = new Intl.NumberFormat(locale, {
         style: "currency",
         currency: currency
-    }).format(tempPrice);
+    }).format(totalPrice);
 
     // Actualizarea interfeței
     priceElement.textContent = `${i18next.t("estimatedPrice")} ${formattedPrice}`;
     priceElement.classList.add("isVisible");
     priceCurrency.classList.add("isVisible");
+    
+    updateUI(); // Reîmprospătăm UI pentru a include noile prețuri
+
 }
+
 
 function withPrice() {
     setPrice.classList.add("isVisible");
@@ -362,6 +397,7 @@ function updateUI() {
             createRecordTemplate(`${i18next.t("length")}:`, record.lengthItem.toFixed(2), "m"),
             createRecordTemplate(`${i18next.t("quantity")}:`, record.quantityItem.toFixed(2), "pcs"),
             createRecordTemplate(`${i18next.t("recordVolume")}`, record.itemVolume.toFixed(2), "m\u00B3"),
+            createRecordTemplate(`${i18next.t("recordPrice")}`, record.itemPrice ? record.itemPrice.toFixed(2) + " RON" : "-", "") // Afișăm prețul individual dacă este calculat
         ];
 
         recordElements.forEach(([label, value, units]) => {
@@ -370,57 +406,53 @@ function updateUI() {
             recordLiElement.appendChild(units);
         });
 
-
-        
         let deleteRecordBtn = document.createElement("button");
         deleteRecordBtn.textContent = "Delete";
         deleteRecordBtn.setAttribute("id","delete-record-btn");
         recordLiElement.appendChild(deleteRecordBtn);
 
-        deleteRecordBtn.addEventListener("click", () => deleteRecord(record.id))
+        deleteRecordBtn.addEventListener("click", () => deleteRecord(record.id));
         
-        recordsList.appendChild(recordLiElement)
-
+        recordsList.appendChild(recordLiElement);
     });
 
     log(`Display updated !`);
 }
 
+
 //Sumarry modal
 
 generateSummaryBtn.addEventListener("click", function () {
-    // Check if there are records available
     if (records.length === 0) {
         alert("No records available to generate summary!");
         return;
     }
 
-    // Initialize total volume
     let totalVolume = 0;
-    // Get the current price (if available)
-    let currentPrice = parseFloat(setPrice.value.trim());
-    if (isNaN(currentPrice)) {
-        currentPrice = 0; // Default to 0 if no valid price is set
-    }
+    let totalPrice = 0;
+    let currentPrice = parseFloat(setPrice.value.trim()) || 0;
 
-    // Build the summary content with all records
     let summaryContent = `<h3>${i18next.t("allRecords")}</h3>`;
     summaryContent += "<table border='1' style='width: 100%; border-collapse: collapse; text-align: center;'>";
     summaryContent += `
         <tr>
-            <th class="custom-width-small">${i18next.t("recordHead")}</th>
-            <th class="custom-width">${i18next.t("width")} (m)</th>
-            <th class="custom-width">${i18next.t("height")} (m)</th>
-            <th class="custom-width">${i18next.t("length")} (m)</th>
-            <th class="custom-width">${i18next.t("quantity")} (${i18next.t("pieces")})</th>
-            <th class="custom-width">${i18next.t("recordVolume")} (m³)</th>
-            <th class="custom-width-large">${i18next.t("obs")}</th>
-
+            <th>${i18next.t("recordHead")}</th>
+            <th>${i18next.t("width")} (m)</th>
+            <th>${i18next.t("height")} (m)</th>
+            <th>${i18next.t("length")} (m)</th>
+            <th>${i18next.t("quantity")} (${i18next.t("pieces")})</th>
+            <th>${i18next.t("recordVolume")} (m³)</th>
+            <th>${i18next.t("estimatedPrice")}</th>
+            <th>${i18next.t("obs")}</th>
         </tr>
     `;
 
     records.forEach((record, index) => {
-        totalVolume += record.itemVolume; // Add to the total volume
+        totalVolume += record.itemVolume;
+        let individualVolume = record.widthItem * record.heightItem * record.lengthItem;
+        let individualPrice = Math.ceil(individualVolume * currentPrice) * record.quantityItem;
+
+        totalPrice += individualPrice;
 
         summaryContent += `
             <tr>
@@ -430,6 +462,7 @@ generateSummaryBtn.addEventListener("click", function () {
                 <td>${record.lengthItem.toFixed(2)}</td>
                 <td>${record.quantityItem}</td>
                 <td>${record.itemVolume.toFixed(2)}</td>
+                <td>${individualPrice.toFixed(2)} RON</td>
                 <td></td>
             </tr>
         `;
@@ -437,38 +470,27 @@ generateSummaryBtn.addEventListener("click", function () {
 
     summaryContent += "</table>";
 
-
-    // Calculate estimated price
-    let estimatedPrice = totalVolume * currentPrice;
-    let formattedPrice = new Intl.NumberFormat('ro-RO', {
+    let formattedTotalPrice = new Intl.NumberFormat('ro-RO', {
         style: 'currency',
         currency: 'RON'
-    }).format(estimatedPrice);
+    }).format(totalPrice);
 
-    // Add total volume below the table
-    summaryContent +=
-    `
-    <h3 style="text-align: right; margin-top: 10px;margin-right:1rem">
-        ${i18next.t("totalVolume")} ${totalVolume.toFixed(2)} m³</h3>
-    </h3>
-    
-${(priceFlag) ?
-`<h3 style="text-align: right; margin-right: 1rem;">
-    ${i18next.t("setPrice")} ${currentPrice} ${(i18next.language === "ro" ? 'RON/m³' : 'EUR/m³')}
-</h3> 
-
-<h3 style="text-align: right; margin-right: 1rem;">
-    ${i18next.t("estimatedPrice")} ${estimatedPrice.toFixed(2)} ${(i18next.language === "ro" ? 'RON' : 'EUR')}
-</h3>`
-: ""}
-
+    summaryContent += `
+        <h3 style="text-align: right; margin-top: 10px;margin-right:1rem">
+            ${i18next.t("totalVolume")} ${totalVolume.toFixed(2)} m³
+        </h3>
+        <h3 style="text-align: right; margin-right: 1rem;">
+            ${i18next.t("setPrice")} ${currentPrice} RON/m³
+        </h3> 
+        <h3 style="text-align: right; margin-right: 1rem;">
+            ${i18next.t("estimatedTotalPrice")} ${formattedTotalPrice}
+        </h3>
     `;
-    
+
     document.getElementById("summary-content").innerHTML = summaryContent;
-    
-    // Show the modal
     document.getElementById("summary-modal").style.display = "block";
 });
+
 
 // Event listener for closing the modal
 document.querySelector(".close-btn").addEventListener("click", function() {
