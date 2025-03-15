@@ -301,7 +301,7 @@ function withoutPrice() {
     setPrice.classList.remove("isVisible");
     priceCurrency.classList.remove("isVisible");
     priceCurrency.classList.add("isHidden");
-    priceOption.classList.add("isHidden");
+    // priceOption.classList.add("isHidden");
     priceElement.classList.add("isHidden");
     priceFlag = false;
 }

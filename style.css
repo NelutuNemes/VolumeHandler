@@ -221,7 +221,7 @@ body{
     border-radius: 6px;
     margin-top: 1rem;
     text-align: center;
-    font-size: 16px;
+    /* font-size: 16px; */
 }
 #price-currency{
     display: none;
@@ -438,10 +438,23 @@ footer{
         align-items: flex-end;
         font-size: 24px;
         cursor: pointer;
+        
     }
     #close-modal-symbol{
         font-size: 2rem;
+        border: 1px solid black;
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
     }
+        #close-modal-symbol:hover{
+            color: red;
+            background: rgb(219, 230, 242);
+        }
 
         th.custom-width-small{
         width: 1.4rem;
