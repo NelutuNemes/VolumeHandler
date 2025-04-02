@@ -50,6 +50,7 @@ body{
     padding: 1rem;
     box-sizing: border-box;
     border-radius: 12px;
+    overflow: auto;
 }
 
 /* test  */
