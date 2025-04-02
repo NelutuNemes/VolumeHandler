@@ -10,57 +10,63 @@
 </head>
 <body>
     <header></header>
-    <main>
-        <div class="container" id="container">
-                <div class="header">
-        <button id="lang-ro" class="lang-btn"><img src="resources/image/ro-flag.png" alt="Română" width="30"></button>
-        <button id="lang-en" class="lang-btn"><img src="resources/image/uk-flag.png" alt="English" width="30"></button>
-    </div>
+  <main>
+    <div class="container" id="container">
+        <div class="header">
+            <button id="lang-ro" class="lang-btn"><img src="resources/image/ro-flag.png" alt="Română" width="30"></button>
+            <button id="lang-en" class="lang-btn"><img src="resources/image/uk-flag.png" alt="English" width="30"></button>
+        </div>
 
-            <p id="app-title"><span id="title-text">TimberMetrics</span></p>
-            <div class="operands">           
-            <input type="text" class="operand" id="width" placeholder="Width" inputmode="decimal"  pattern="[0-9]+(\.[0-9]+)?">
-            <input type="text" class="operand" id="height" placeholder="Height" inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?">
-            <input type="text" class="operand" id="length" placeholder="Length" inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?">
-            <input type="text" class="operand" id="quantity" placeholder="Quantity" inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?">
+        <h1 id="app-title"><span id="title-text">TimberMetrics</span></h1>
+
+        <div class="operands">
+            <input type="text" class="operand" id="width" placeholder="Width" inputmode="decimal" pattern="[0-9]+([.,][0-9]+)?">
+            <input type="text" class="operand" id="height" placeholder="Height" inputmode="decimal" pattern="[0-9]+([.,][0-9]+)?">
+            <input type="text" class="operand" id="length" placeholder="Length" inputmode="decimal" pattern="[0-9]+([.,][0-9]+)?">
+            <input type="text" class="operand" id="quantity" placeholder="Quantity" inputmode="decimal" pattern="[0-9]+([.,][0-9]+)?">
             <button id="calculate-btn">ADD RECORD</button>
-            </div> 
-            <div class="records-block">
-                <ul id="records-list"></ul>
-                <div class="results">
-                    <div id="display" class="display">
-                        <div id="total-volume-title"></div>
-                        <div id="total-volume-value"></div>
-                    </div>
-                    <div class="price-option" id="price-option">
-                        <p id="question-text">Do you need a price estimate ?</p>
-                        <div class="price-estimate-buttons">
-                            <button id="positive-btn">Yes</button>
-                            <button id="negative-btn">No</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="price-input" id="price-input">
-                <input type="text" id="set-price" placeholder="Set price " inputmode="decimal" pattern="[0-9]+(\.[0-9]+)?" >
-                <div id="price-currency">RON / m&sup3 .
-</div>
-                </div>
-                <div id="price-element"></div>
-            </div>  
+        </div> 
 
-            <button id="generate-summary-btn">Generate Summary</button>
-            <!-- Summary Modal -->
-            <div id="summary-modal" class="modal">
-                <div class="modal-content">
-                    <span class="close-btn"><p id="close-modal-symbol">&times;</p> </span>
-                    <h2>Session summary :</h2>
-                    <p id="summary-content"></p>
-                    <button id="print-summary-btn">Print Summary</button>
+        <div class="records-block">
+            <ul id="records-list"></ul>
+
+            <div class="results">
+                <div id="display" class="display">
+                    <div id="total-volume-title"></div>
+                    <div id="total-volume-value"></div>
+                </div>
+
+                <div class="price-option" id="price-option">
+                    <p id="question-text">Do you need a price estimate?</p>
+                    <div class="price-estimate-buttons">
+                        <button id="positive-btn">Yes</button>
+                        <button id="negative-btn">No</button>
+                    </div>
                 </div>
             </div>
+
+            <div class="price-input" id="price-input">
+                <input type="text" id="set-price" placeholder="Set price" inputmode="decimal" pattern="[0-9]+([.,][0-9]+)?">
+                <div id="price-currency">RON / m&sup3;</div>
+            </div>
+
+            <div id="price-element"></div>
+        </div>  
+
+        <button id="generate-summary-btn">Generate Summary</button>
+
+        <!-- Summary Modal -->
+        <div id="summary-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="close-modal-symbol">&times;</span>
+                <h2>Session summary:</h2>
+                <p id="summary-content"></p>
+                <button id="print-summary-btn">Print Summary</button>
+            </div>
         </div>
-    </main>
+    </div>
+</main>
+
 
     <footer>
 <p>Copyright &copy; 2025 Designed & Developed by Ioan Nemes</p>
